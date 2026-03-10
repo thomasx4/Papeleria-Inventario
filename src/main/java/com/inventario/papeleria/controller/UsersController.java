@@ -85,6 +85,4 @@ public class UsersController {
             return ResponseEntity.notFound().build();
         }
     }
-} //chao
-
-// comentario de prueba para el commit
+}
