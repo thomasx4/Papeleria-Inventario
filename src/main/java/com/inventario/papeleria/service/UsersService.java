@@ -90,5 +90,75 @@ public class UsersService {
 
         usersRepository.delete(user);
     }
+
+    // Buscar usuario por nombre
+    public List<UsersResponseDTO> getUsersByName(String name){
+
+        List<User> users = usersRepository.findByNameContaining(name);
+
+        return users.stream().map(user -> {
+
+            UsersResponseDTO response = new UsersResponseDTO();
+
+            response.setId(user.getId());
+            response.setName(user.getName());
+            response.setEmail(user.getEmail());
+            response.setRole(user.getRole());
+
+            return response;
+
+        }).toList();
+    }
+
+    // Buscar usuario por ID
+    public UsersResponseDTO getUserById(Long id){
+
+        User user = usersRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        UsersResponseDTO response = new UsersResponseDTO();
+
+        response.setId(user.getId());
+        response.setName(user.getName());
+        response.setEmail(user.getEmail());
+        response.setRole(user.getRole());
+
+        return response;
+    }
+
+    // Buscar usuario por email
+    public UsersResponseDTO getUserByEmail(String email){
+
+        User user = usersRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        UsersResponseDTO response = new UsersResponseDTO();
+
+        response.setId(user.getId());
+        response.setName(user.getName());
+        response.setEmail(user.getEmail());
+        response.setRole(user.getRole());
+
+        return response;
+    }
+
+    // Buscar usuarios por rol
+    public List<UsersResponseDTO> getUsersByRole(String role){
+
+        List<User> users = usersRepository.findByRole(role);
+
+        return users.stream().map(user -> {
+
+            UsersResponseDTO response = new UsersResponseDTO();
+
+            response.setId(user.getId());
+            response.setName(user.getName());
+            response.setEmail(user.getEmail());
+            response.setRole(user.getRole());
+
+            return response;
+
+        }).toList();
+    }
 }
 

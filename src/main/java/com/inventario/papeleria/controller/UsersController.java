@@ -85,4 +85,41 @@ public class UsersController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    // Buscar usuario por Nombre
+    @GetMapping("/search")
+    public ResponseEntity<List<UsersResponseDTO>> searchUsers(@RequestParam String name){
+
+        return ResponseEntity.ok(usersService.getUsersByName(name));
+    }
+
+    // Buscar usuario por email
+    @GetMapping("/email")
+    public ResponseEntity<UsersResponseDTO> getUserByEmail(@RequestParam String email){
+
+        return ResponseEntity.ok(usersService.getUserByEmail(email));
+    }
+
+    // Buscar por rol
+    @GetMapping("/role")
+    public ResponseEntity<List<UsersResponseDTO>> getUsersByRole(@RequestParam String role){
+
+        return ResponseEntity.ok(usersService.getUsersByRole(role));
+    }
+
+    // Buscar usuario por ID
+    @GetMapping("/{id}")
+    public ResponseEntity<UsersResponseDTO> getUserById(@PathVariable Long id) {
+
+        try {
+
+            UsersResponseDTO response = usersService.getUserById(id);
+
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+
+        } catch (RuntimeException e) {
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
 }
