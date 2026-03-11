@@ -42,6 +42,20 @@ public class ProductController {
         return ResponseEntity.ok(productsService.updateProduct(id, dto));
     }
 
+    // Buscar producto por id
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductResponseDTO> getProductById(@PathVariable Long id){
+
+        return ResponseEntity.ok(productsService.getProductById(id));
+    }
+
+    // Buscar Producto por Nombre
+    @GetMapping("/search")
+    public ResponseEntity<List<ProductResponseDTO>> getProductsByName(@RequestParam String name){
+
+        return ResponseEntity.ok(productsService.getProductsByName(name));
+    }
+
     // Eliminar producto
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id){

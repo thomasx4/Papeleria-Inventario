@@ -70,39 +70,79 @@ public class ProductService {
         }).collect(Collectors.toList());
     }
 
+    // Buscar producto por id
+        public ProductResponseDTO getProductById(Long id){
+
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+        ProductResponseDTO response = new ProductResponseDTO();
+
+        response.setId(product.getId());
+        response.setName(product.getName());
+        response.setDescription(product.getDescription());
+        response.setPrice(product.getPrice());
+        response.setStocks(product.getStocks());
+        response.setCategoriesId(product.getCategory().getId());
+
+        return response;
+}
+
 
 // Actualizar producto
-public ProductResponseDTO updateProduct(Long id, ProductRequestDTO dto){
+    public ProductResponseDTO updateProduct(Long id, ProductRequestDTO dto){
 
-    Product product = productRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
 
-    product.setName(dto.getName());
-    product.setDescription(dto.getDescription());
-    product.setPrice(dto.getPrice());
-    product.setStocks(dto.getStocks());
-    Categories category = categoriesRepository.findById(dto.getCategoriesId())
-            .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
-    product.setCategory(category);
-    Product updated = productRepository.save(product);
+        product.setName(dto.getName());
+        product.setDescription(dto.getDescription());
+        product.setPrice(dto.getPrice());
+        product.setStocks(dto.getStocks());
+        Categories category = categoriesRepository.findById(dto.getCategoriesId())
+                .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
+        product.setCategory(category);
+        Product updated = productRepository.save(product);
 
-    ProductResponseDTO response = new ProductResponseDTO();
+        ProductResponseDTO response = new ProductResponseDTO();
 
-    response.setId(updated.getId());
-    response.setName(updated.getName());
-    response.setDescription(updated.getDescription());
-    response.setPrice(updated.getPrice());
-    response.setStocks(updated.getStocks());
-    response.setCategoriesId(updated.getCategory().getId());
-    return response;
-    }
+        response.setId(updated.getId());
+        response.setName(updated.getName());
+        response.setDescription(updated.getDescription());
+        response.setPrice(updated.getPrice());
+        response.setStocks(updated.getStocks());
+        response.setCategoriesId(updated.getCategory().getId());
+        return response;
+        }
 
-// Eliminar producto
-public void deleteProduct(Long id){
+    // Buscar por Nombre
+    public List<ProductResponseDTO> getProductsByName(String name){
 
-    Product product = productRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+    List<Product> products = productRepository.findByNameContaining(name);
 
-    productRepository.delete(product);
-    }
+    return products.stream().map(product -> {
+
+        ProductResponseDTO response = new ProductResponseDTO();
+
+        response.setId(product.getId());
+        response.setName(product.getName());
+        response.setDescription(product.getDescription());
+        response.setPrice(product.getPrice());
+        response.setStocks(product.getStocks());
+        response.setCategoriesId(product.getCategory().getId());
+
+        return response;
+
+    }).toList();
+}
+
+    // Eliminar producto
+    public void deleteProduct(Long id){
+
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+        productRepository.delete(product);
+        }
+
 }
