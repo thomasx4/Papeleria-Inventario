@@ -29,6 +29,7 @@ public class CategoriesController {
 
     private final CategoriesService categoriesService;
     
+//----------------------------------------------------------------------------------------------
     //Create categories
 
     @PostMapping
@@ -43,6 +44,8 @@ public class CategoriesController {
         }
     }
     
+
+//----------------------------------------------------------------------------------------------
     //Get categories
 
     @GetMapping
@@ -56,6 +59,8 @@ public class CategoriesController {
         }
     }
 
+
+//----------------------------------------------------------------------------------------------
     //Get By ID categories
 
     @GetMapping("/{id}")
@@ -69,6 +74,8 @@ public class CategoriesController {
 
     }
 
+
+//----------------------------------------------------------------------------------------------
     //Get By Name categories
 
     @GetMapping("/name/{name}")
@@ -81,6 +88,8 @@ public class CategoriesController {
         }
     }
 
+
+//----------------------------------------------------------------------------------------------
     //Update categories
 
     @PutMapping("/{id}")
@@ -94,6 +103,8 @@ public class CategoriesController {
         }
     }
 
+
+//----------------------------------------------------------------------------------------------
     // Update Specific Category
 
     @PatchMapping("/{id}")
@@ -107,6 +118,8 @@ public class CategoriesController {
         }
     }
 
+
+//----------------------------------------------------------------------------------------------
     //Delete categories
 
     @DeleteMapping("/{id}")
