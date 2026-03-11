@@ -19,6 +19,8 @@ public class CategoriesService {
 
     private final CategoriesRepository categoriesRepository;
 
+
+//----------------------------------------------------------------------------------------------
     //Create categories
 
     public CategoriesResponseDTO createCategories(CategoriesRequestDTO categoriesRequestDTO){
@@ -35,6 +37,8 @@ public class CategoriesService {
         return response;
     }
 
+
+//----------------------------------------------------------------------------------------------
     //Get categories
 
 
@@ -54,6 +58,8 @@ public class CategoriesService {
 
     }
 
+
+//----------------------------------------------------------------------------------------------
     //Get By ID categories
 
     public Optional<CategoriesResponseDTO> getCategoryById(Long id){
@@ -78,6 +84,8 @@ public class CategoriesService {
         }
     }
 
+
+//----------------------------------------------------------------------------------------------
     //Get By Name categories
 
 
@@ -102,6 +110,8 @@ public class CategoriesService {
         }
     }
 
+
+//----------------------------------------------------------------------------------------------
     //Update categories
 
     public CategoriesResponseDTO updateCategory(Long id, CategoriesRequestDTO categoriesRequestDTO){
@@ -123,20 +133,17 @@ public class CategoriesService {
         return response;
     }
 
+    
+//----------------------------------------------------------------------------------------------
     //Delete categories
 
-    public CategoriesResponseDTO deleteCategory (Long id){
-        CategoriesResponseDTO response = new CategoriesResponseDTO();
+    public void deleteCategory (Long id){
+        Categories categories = categoriesRepository.findById(id).
+        orElseThrow(() -> new RuntimeException("Categoria no encontrada"));
+        categoriesRepository.delete(categories);
 
-        if (categoriesRepository.existsById(id)) {
-            categoriesRepository.deleteById(id);
-            
-            System.out.println("Categoria eliminada correctamente");
-            return response;
-        }
 
-        System.out.println("Categoria no encontrada");
-        return response;
+        
     }
 
 
